@@ -1,3 +1,69 @@
+########################################
+###        Start C.gitignore         ###
+########################################
+
+# Prerequisites
+*.d
+
+# Object files
+*.o
+*.ko
+*.obj
+*.elf
+
+# Linker output
+*.ilk
+*.map
+*.exp
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Libraries
+*.lib
+*.a
+*.la
+*.lo
+
+# Shared objects (inc. Windows DLLs)
+*.dll
+*.so
+*.so.*
+*.dylib
+
+# Executables
+*.exe
+*.out
+*.app
+*.i*86
+*.x86_64
+*.hex
+
+# Debug files
+*.dSYM/
+*.su
+*.idb
+*.pdb
+
+# Kernel Module Compile Results
+*.mod*
+*.cmd
+.tmp_versions/
+modules.order
+Module.symvers
+Mkfile.old
+dkms.conf
+
+########################################
+###         End C.gitignore          ###
+########################################
+
+
+########################################
+###       Start C++.gitignore        ###
+########################################
+
 # Prerequisites
 *.d
 
@@ -30,3 +96,529 @@
 *.exe
 *.out
 *.app
+
+########################################
+###        End C++.gitignore         ###
+########################################
+
+
+########################################
+###      Start CMake.gitignore       ###
+########################################
+
+CMakeLists.txt.user
+CMakeCache.txt
+CMakeFiles
+CMakeScripts
+Testing
+Makefile
+cmake_install.cmake
+install_manifest.txt
+compile_commands.json
+CTestTestfile.cmake
+_deps
+
+########################################
+###       End CMake.gitignore        ###
+########################################
+
+
+########################################
+###       Start Gcov.gitignore       ###
+########################################
+
+# gcc coverage testing tool files
+
+*.gcno
+*.gcda
+*.gcov
+
+########################################
+###        End Gcov.gitignore        ###
+########################################
+
+
+########################################
+###      Start Anjuta.gitignore      ###
+########################################
+
+# Local configuration folder and symbol database
+/.anjuta/
+/.anjuta_sym_db.db
+
+########################################
+###       End Anjuta.gitignore       ###
+########################################
+
+
+########################################
+###     Start Archives.gitignore     ###
+########################################
+
+# It's better to unpack these files and commit the raw source because
+# git has its own built in compression methods.
+*.7z
+*.jar
+*.rar
+*.zip
+*.gz
+*.gzip
+*.tgz
+*.bzip
+*.bzip2
+*.bz2
+*.xz
+*.lzma
+*.cab
+*.xar
+
+# Packing-only formats
+*.iso
+*.tar
+
+# Package management formats
+*.dmg
+*.xpi
+*.gem
+*.egg
+*.deb
+*.rpm
+*.msi
+*.msm
+*.msp
+*.txz
+
+########################################
+###      End Archives.gitignore      ###
+########################################
+
+
+########################################
+###      Start Backup.gitignore      ###
+########################################
+
+*.bak
+*.gho
+*.ori
+*.orig
+*.tmp
+
+########################################
+###       End Backup.gitignore       ###
+########################################
+
+
+########################################
+###       Start Diff.gitignore       ###
+########################################
+
+*.patch
+*.diff
+
+########################################
+###        End Diff.gitignore        ###
+########################################
+
+
+########################################
+###     Start Eclipse.gitignore      ###
+########################################
+
+.metadata
+bin/
+tmp/
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.settings/
+.loadpath
+.recommenders
+
+# External tool builders
+.externalToolBuilders/
+
+# Locally stored "Eclipse launch configurations"
+*.launch
+
+# PyDev specific (Python IDE for Eclipse)
+*.pydevproject
+
+# CDT-specific (C/C++ Development Tooling)
+.cproject
+
+# CDT- autotools
+.autotools
+
+# Java annotation processor (APT)
+.factorypath
+
+# PDT-specific (PHP Development Tools)
+.buildpath
+
+# sbteclipse plugin
+.target
+
+# Tern plugin
+.tern-project
+
+# TeXlipse plugin
+.texlipse
+
+# STS (Spring Tool Suite)
+.springBeans
+
+# Code Recommenders
+.recommenders/
+
+# Annotation Processing
+.apt_generated/
+.apt_generated_test/
+
+# Scala IDE specific (Scala & Java development for Eclipse)
+.cache-main
+.scala_dependencies
+.worksheet
+
+# Uncomment this line if you wish to ignore the project description file.
+# Typically, this file would be tracked if it contains build/dependency configurations:
+.project
+
+########################################
+###      End Eclipse.gitignore       ###
+########################################
+
+
+########################################
+###       Start Emacs.gitignore      ###
+########################################
+
+# -*- mode: gitignore; -*-
+*~
+\#*\#
+/.emacs.desktop
+/.emacs.desktop.lock
+*.elc
+auto-save-list
+tramp
+.\#*
+
+# Org-mode
+.org-id-locations
+*_archive
+
+# flymake-mode
+*_flymake.*
+
+# eshell files
+/eshell/history
+/eshell/lastdir
+
+# elpa packages
+/elpa/
+
+# reftex files
+*.rel
+
+# AUCTeX auto folder
+/auto/
+
+# cask packages
+.cask/
+dist/
+
+# Flycheck
+flycheck_*.el
+
+# server auth directory
+/server/
+
+# projectiles files
+.projectile
+
+# directory configuration
+.dir-locals.el
+
+# network security
+/network-security.data
+
+########################################
+###        End Emacs.gitignore       ###
+########################################
+
+
+########################################
+###       Start Kate.gitignore       ###
+########################################
+
+# Swap Files #
+.*.kate-swp
+.swp.*
+
+########################################
+###        End Kate.gitignore        ###
+########################################
+
+
+########################################
+###     Start KDevelop4.gitignore    ###
+########################################
+
+*.kdev4
+.kdev4/
+
+########################################
+###      End KDevelop4.gitignore     ###
+########################################
+
+
+########################################
+###   Start LibreOffice.gitignore    ###
+########################################
+
+# LibreOffice locks
+.~lock.*#
+
+########################################
+###    End LibreOffice.gitignore     ###
+########################################
+
+
+########################################
+###     Start NetBeans.gitignore     ###
+########################################
+
+**/nbproject/private/
+**/nbproject/Makefile-*.mk
+**/nbproject/Package-*.bash
+build/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
+
+########################################
+###      End NetBeans.gitignore      ###
+########################################
+
+
+########################################
+###        Start Vim.gitignore       ###
+########################################
+
+# Swap
+[._]*.s[a-v][a-z]
+!*.svg  # comment out if you don't need vector files
+[._]*.sw[a-p]
+[._]s[a-rt-v][a-z]
+[._]ss[a-gi-z]
+[._]sw[a-p]
+
+# Session
+Session.vim
+Sessionx.vim
+
+# Temporary
+.netrwhist
+*~
+# Auto-generated tag files
+tags
+# Persistent undo
+[._]*.un~
+
+########################################
+###         End Vim.gitignore        ###
+########################################
+
+
+########################################
+### Start VisualStudioCode.gitignore ###
+########################################
+
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.code-workspace
+
+# Local History for Visual Studio Code
+.history/
+
+########################################
+###  End VisualStudioCode.gitignore  ###
+########################################
+
+
+########################################
+###      Start Windows.gitignore     ###
+########################################
+
+# Windows thumbnail cache files
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+
+# Windows shortcuts
+*.lnk
+
+########################################
+###       End Windows.gitignore      ###
+########################################
+
+
+########################################
+###        Start QT.gitignore        ###
+########################################
+
+# C++ objects and libs
+*.slo
+*.lo
+*.o
+*.a
+*.la
+*.lai
+*.so
+*.so.*
+*.dll
+*.dylib
+
+# Qt-es
+object_script.*.Release
+object_script.*.Debug
+*_plugin_import.cpp
+/.qmake.cache
+/.qmake.stash
+*.pro.user
+*.pro.user.*
+*.qbs.user
+*.qbs.user.*
+*.moc
+moc_*.cpp
+moc_*.h
+qrc_*.cpp
+ui_*.h
+*.qmlc
+*.jsc
+Makefile*
+*build-*
+*.qm
+*.prl
+
+# Qt unit tests
+target_wrapper.*
+
+# QtCreator
+*.autosave
+
+# QtCreator Qml
+*.qmlproject.user
+*.qmlproject.user.*
+
+# QtCreator CMake
+CMakeLists.txt.user*
+
+# QtCreator 4.8< compilation database
+compile_commands.json
+
+# QtCreator local machine specific files for imported projects
+*creator.user*
+
+*_qmlcache.qrc
+
+########################################
+###         End QT.gitignore         ###
+########################################
+
+########################################
+###      Start clangd gitignore      ###
+########################################
+
+# Cache directory
+.cache/
+# Build directory
+_build/
+
+########################################
+###       End clangd gitignore       ###
+########################################
+
+#############################################
+###  Start .gitignore for vsoip_src repo  ###
+#############################################
+
+src-conference
+src-ua
+src-ua_mixer
+ng_src-fmk
+src-xml
+
+git-gbr
+git-gpush
+
+#############################################
+###   End .gitignore for vsoip_src repo   ###
+#############################################
+
+##############################################
+###  Start .gitignore for ng_src-fmk repo  ###
+##############################################
+
+src/FmkVersion.cpp
+
+##############################################
+###   End .gitignore for ng_src-fmk repo   ###
+##############################################
+
+##################################################
+###  Start .gitignore for src-conference repo  ###
+##################################################
+
+src/ConferenceVersion.cpp
+
+##################################################
+###  End   .gitignore for src-conference repo  ###
+##################################################
+
+##########################################
+###  Start .gitignore for src-ua repo  ###
+##########################################
+
+src/UaVersion.cpp
+
+##########################################
+###  End   .gitignore for src-ua repo  ###
+##########################################
+
+################################################
+###  Start .gitignore for src-ua_mixer repo  ###
+################################################
+
+src/UaMixerVersion.cpp
+
+################################################
+###  End   .gitignore for src-ua_mixer repo  ###
+################################################
+
+###########################################
+###  Start .gitignore for src-xml repo  ###
+###########################################
+
+src/XmlVersion.cpp
+
+###########################################
+###  End   .gitignore for src-xml repo  ###
+###########################################
+
+#############################################
+###  Start .gitignore for vsoip_src repo  ###
+#############################################
+
+src/VsoipVersion.cpp
+src/entrypoint.sh
+
+#############################################
+###  End   .gitignore for vsoip_src repo  ###
+#############################################

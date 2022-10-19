@@ -1,0 +1,6 @@
+[submodule "extern/g3log"]
+	path = extern/g3log
+	url = https://github.com/ablangy/g3log.git
+[submodule "extern/g3sinks"]
+	path = extern/g3sinks
+	url = https://github.com/KjellKod/g3sinks.git

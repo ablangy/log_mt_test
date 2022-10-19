@@ -1,0 +1,36 @@
+cmake_minimum_required(VERSION 3.18)
+include_guard(GLOBAL)
+
+include(ExternalProject)
+
+set(G3LOG_TARGET_NAME external_g3log)
+set(G3LOG_PATH ${CMAKE_CURRENT_LIST_DIR}/../extern/g3log)
+set(G3LOG_INSTALL_DIR ${CMAKE_BINARY_DIR}/g3log)
+set(G3LOG_LIB_DIR ${G3LOG_INSTALL_DIR}/lib)
+set(G3LOG_INCLUDE_DIR ${G3LOG_INSTALL_DIR}/include)
+
+ExternalProject_add(
+    ${G3LOG_TARGET_NAME}
+    SOURCE_DIR ${G3LOG_PATH}
+    PREFIX ${G3LOG_INSTALL_DIR}
+    CMAKE_ARGS -DADD_FATAL_EXAMPLE=OFF
+               -DADD_G3LOG_BENCH_PERFORMANCE=OFF
+               -DADD_G3LOG_UNIT_TEST=OFF
+               -DCMAKE_INSTALL_PREFIX=${G3LOG_INSTALL_DIR}
+               -DCMAKE_INSTALL_LIBDIR=${G3LOG_LIB_DIR}
+               -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
+)
+
+set_target_properties(
+    ${G3LOG_TARGET_NAME}
+    PROPERTIES
+    ADDITIONAL_CLEAN_FILES ${G3LOG_INSTALL_DIR}
+)
+
+set(G3LOG_INTERFACE G3LOG CACHE INTERNAL "${G3LOG_TARGET_NAME} : Nom de l'interface." FORCE)
+
+add_library(${G3LOG_INTERFACE} INTERFACE)
+add_dependencies(${G3LOG_INTERFACE} ${G3LOG_TARGET_NAME})
+target_include_directories(${G3LOG_INTERFACE} INTERFACE ${G3LOG_INCLUDE_DIR})
+target_link_directories(${G3LOG_INTERFACE} INTERFACE ${G3LOG_LIB_DIR})
+target_link_libraries(${G3LOG_INTERFACE} INTERFACE g3log)
