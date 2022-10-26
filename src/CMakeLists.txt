@@ -22,8 +22,17 @@ target_include_directories(${TEST_APP}
 target_sources(${TEST_APP}
     PRIVATE
 		main.cpp
+		Arguments.cpp
+		Arguments.h
 )
 
 set(COMPILE_FLAGS "-Wall" "-Wpedantic" "-Wshadow" "-Werror" "-Wextra")
 target_compile_options(${TEST_APP} BEFORE PRIVATE ${COMPILE_FLAGS})
+
+include(GNUInstallDirs)
+set_target_properties(${TEST_APP}
+    PROPERTIES
+        RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
+        INSTALL_RPATH ${CMAKE_INSTALL_FULL_LIBDIR}
+)
 

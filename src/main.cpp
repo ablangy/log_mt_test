@@ -8,8 +8,15 @@
 #include "g3log/logworker.hpp"
 #include "g3log/g3log.hpp"
 
-int main(int /*argc*/, char ** /*argv*/)
+#include "Arguments.h"
+
+int main(int argc, char ** argv)
 {
+	auto& args = tapp::Arguments::instance();
+	if (args.set(argc, argv) != tapp::Arguments::eSetReturnCode::CONTINUE) {
+		args.usage();
+		std::exit(EXIT_FAILURE);
+	}
 	
 	auto logWorker = g3::LogWorker::createLogWorker();
 	if (not logWorker) {
@@ -17,11 +24,10 @@ int main(int /*argc*/, char ** /*argv*/)
 		std::exit(EXIT_FAILURE);
 	}
 
-	// LogRotate logRotateSink{"tapp_", "/tmp"};
-	auto logRotateSink = std::make_unique<LogRotate> ("tapp_", "/tmp");
-	logRotateSink->setMaxArchiveLogCount(1);
-	logRotateSink->setMaxLogSize(1024 * 1024 * 3);
-	logRotateSink->setFlushPolicy(1);
+	auto logRotateSink = std::make_unique<LogRotate> (args.getLogFilenamePrefix(), args.getLogDirectory());
+	logRotateSink->setMaxArchiveLogCount(args.getMaxArchiveLogCount());
+	logRotateSink->setMaxLogSize(args.getMaxLogSize());
+	logRotateSink->setFlushPolicy(args.getFlushPolicy());
 
 	auto logHandle = logWorker->addSink(std::move(logRotateSink), &LogRotate::save);
 	if (not logHandle) {
@@ -30,6 +36,8 @@ int main(int /*argc*/, char ** /*argv*/)
 	}
 
 	g3::initializeLogging(logWorker.get());
+
+	LOG(INFO) << "Hello from test app !";
 
 	// SIGTERM default behavior restored
 	g3::overrideSetupSignals({

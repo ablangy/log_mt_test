@@ -13,10 +13,9 @@ tapp::Arguments::Arguments()
     : m_progname {}
     , m_logFilenamePrefix {}
     , m_logDirectory {}
-    , m_syslogIdentity {}
-    , m_flushPolicy { }
-    , m_maxArchiveLogCount { }
-    , m_maxLogSize { }
+    , m_flushPolicy { 0 }
+    , m_maxArchiveLogCount { 1 }
+    , m_maxLogSize { 1024 }
 {
 }
 
@@ -30,14 +29,11 @@ void tapp::Arguments::usage()
 {
 	std::cout << m_progname
 	          << "-f prefix -d directory -s identity -p flushPolicy -m max_archives -l max_size[-h|--help]\n"
-	             "\t -f|--logFilenamePrefix prefix\t préfixe du nom de fichier de log\n"
-	             "\t -d|--logDirectory directory\t chemin complet du fichier de log\n"
-	             "\t -p|--flushPolicy flushPolicy\t\t périodicité du flush des logs. 0: jamais (système auto flush), 1..N; toutes les N écritures dans le "
-	             "fichier de log\n"
-	             "\t -m|--maxArchiveLogCount max_archives\t Nombre maximum de rotation de fichiers de log. Après avoir avoir atteint 'maxArchiveLogCount', le "
-	             "plus ancien fichier de log est détruit\n"
-	             "\t -l|--maxLogSize max_size\t\t taille maximum d'un fichier de log en octets. Après avoir atteint 'maxLogSize' le fichier de log est "
-	             "compressé et un nouveau fichier de log est créé et utilisé.\n"
+	             "\t -f|--logFilenamePrefix prefix\t log file prefix\n"
+	             "\t -d|--logDirectory directory\t log directory full path\n"
+	             "\t -p|--flushPolicy flushPolicy\t\t logs flush period. 0: never (system auto flush), 1..N; every N writes\n"
+	             "\t -m|--maxArchiveLogCount max_archives\t maximum backup files count\n"
+	             "\t -l|--maxLogSize max_size\t\t maximum log file size in bytes\n"
 	             "\n";
 	return;
 }
