@@ -24,6 +24,8 @@ target_sources(${TEST_APP}
 		main.cpp
 		Arguments.cpp
 		Arguments.h
+		TappThread.cpp
+		TappThread.h
 )
 
 set(COMPILE_FLAGS "-Wall" "-Wpedantic" "-Wshadow" "-Werror" "-Wextra")
