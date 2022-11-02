@@ -16,6 +16,7 @@ tapp::Arguments::Arguments()
     , m_flushPolicy { 0 }
     , m_maxArchiveLogCount { 1 }
     , m_maxLogSize { 1024 }
+    , m_threadCount { }
 {
 }
 
@@ -28,12 +29,13 @@ tapp::Arguments& tapp::Arguments::instance()
 void tapp::Arguments::usage()
 {
 	std::cout << m_progname
-	          << "-f prefix -d directory -s identity -p flushPolicy -m max_archives -l max_size[-h|--help]\n"
+	          << " -f prefix -d directory -p flushPolicy -m max_archives -l max_size -t thread_count [-h|--help]\n"
 	             "\t -f|--logFilenamePrefix prefix\t log file prefix\n"
 	             "\t -d|--logDirectory directory\t log directory full path\n"
 	             "\t -p|--flushPolicy flushPolicy\t\t logs flush period. 0: never (system auto flush), 1..N; every N writes\n"
 	             "\t -m|--maxArchiveLogCount max_archives\t maximum backup files count\n"
 	             "\t -l|--maxLogSize max_size\t\t maximum log file size in bytes\n"
+	             "\t -t|--threadCount thread_count\t\t waiting threads count\n"
 	             "\n";
 	return;
 }
@@ -56,10 +58,11 @@ tapp::Arguments::eSetReturnCode tapp::Arguments::set(int argc, char* const* argv
 		{ "flushPolicy", 1, nullptr, 'p' },
 		{ "maxArchiveLogCount", 1, nullptr, 'm' },
 		{ "maxLogSize", 1, nullptr, 'l' },
+		{ "threadCount", 1, nullptr, 't' },
 		{ nullptr, 0, nullptr, 0 },
 	};
 
-	while ((rc = getopt_long(argc, argv, "hf:d:p:m:l:", args.data(), &args_idx)) != -1) {
+	while ((rc = getopt_long(argc, argv, "hf:d:p:m:l:t:", args.data(), &args_idx)) != -1) {
 		switch (rc) {
 		case 'f':
 			m_logFilenamePrefix = optarg;
@@ -77,7 +80,6 @@ tapp::Arguments::eSetReturnCode tapp::Arguments::set(int argc, char* const* argv
 		case 'm':
 			try {
 				m_maxArchiveLogCount = std::stoi(optarg);
-
 			} catch (const std::exception& ex) {
 				std::cerr << "maxArchiveLogRotate parameter (" << optarg << ") is badly formated : " << ex.what() << "\n\n";
 			}
@@ -85,10 +87,17 @@ tapp::Arguments::eSetReturnCode tapp::Arguments::set(int argc, char* const* argv
 		case 'l':
 			try {
 				m_maxLogSize = std::stoi(optarg);
-
 			} catch (const std::exception& ex) {
 				std::cerr << "maxLogSize parameter (" << optarg << ") is badly formated : " << ex.what() << "\n\n";
 			}
+			break;
+		case 't':
+			try {
+				m_threadCount = std::stoi(optarg);
+			} catch (const std::exception& ex) {
+				std::cerr << "threadCount parameter (" << optarg << ") is badly formated : " << ex.what() << "\n\n";
+			}
+
 			break;
 		case '?':
 		case 'h':

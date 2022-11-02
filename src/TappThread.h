@@ -11,15 +11,12 @@ namespace tapp {
 
 class TappThread {
 public:
-	TappThread(int schedPolicy, int schedPriority, cpu_set_t cpuAffinity);
+	TappThread(int schedPolicy, int schedPriority, cpu_set_t cpuAffinity, const std::shared_ptr<pthread_barrier_t>& barrier);
 
-	virtual ~TappThread() = default;
-
-	virtual void run() = 0;
+	void run();
 
 	void start();
-
-	virtual void stop();
+	void stop();
 
 protected:
 	bool m_isRunning;
@@ -31,6 +28,7 @@ private:
 	int m_threadPolicy;
 	int m_threadPriority;
 	cpu_set_t m_threadCpuAffinity;
+	std::shared_ptr<pthread_barrier_t> m_barrier;
 };
 
 }

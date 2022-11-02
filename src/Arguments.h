@@ -4,6 +4,7 @@
 #define TEST_APP_ARGUMENTS_H
 
 #include <string>
+#include <optional>
 
 namespace tapp {
 
@@ -26,6 +27,7 @@ public:
 	int64_t getFlushPolicy() const { return m_flushPolicy; }
 	int64_t getMaxArchiveLogCount() const { return m_maxArchiveLogCount; }
 	int64_t getMaxLogSize() const { return m_maxLogSize; }
+	std::optional<uint32_t> getThreadCount() const { return m_threadCount; }
 
 private:
 	Arguments();
@@ -37,6 +39,7 @@ private:
 	int64_t m_flushPolicy;
 	int64_t m_maxArchiveLogCount;
 	int64_t m_maxLogSize;
+	std::optional<uint32_t> m_threadCount;
 };
 }
 
