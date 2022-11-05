@@ -7,7 +7,8 @@
 #include <cstring>
 #include <mutex>
 
-tapp::TappThread::TappThread(int schedPolicy, int schedPriority, cpu_set_t cpuAffinity, const std::shared_ptr<pthread_barrier_t>& barrier)
+tapp::TappThread::TappThread(
+    int schedPolicy, int schedPriority, cpu_set_t cpuAffinity, const std::shared_ptr<pthread_barrier_t>& barrier, std::optional<std::function<void()>> runCore)
     : m_isRunning { false }
     , m_threadLock {}
     , m_pthread {}
@@ -15,6 +16,7 @@ tapp::TappThread::TappThread(int schedPolicy, int schedPriority, cpu_set_t cpuAf
     , m_threadPriority { schedPriority }
     , m_threadCpuAffinity { cpuAffinity }
     , m_barrier { barrier }
+    , m_runCore { runCore }
 {
 }
 
@@ -61,11 +63,17 @@ void tapp::TappThread::stop()
 
 void tapp::TappThread::run()
 {
-	std::unique_lock guard { m_threadLock };
+	if (not m_runCore) {
+		std::unique_lock guard { m_threadLock };
 
-	if (int bwRes = pthread_barrier_wait(m_barrier.get()); bwRes != 0 && bwRes != PTHREAD_BARRIER_SERIAL_THREAD) {
-		std::cerr << "CommandFairDispatcher n'a pas pu faire pthread_barrier_wait, code erreur : " << bwRes << std::endl;
+		if (int bwRes = pthread_barrier_wait(m_barrier.get()); bwRes != 0 && bwRes != PTHREAD_BARRIER_SERIAL_THREAD) {
+			std::cerr << "CommandFairDispatcher n'a pas pu faire pthread_barrier_wait, code erreur : " << bwRes << std::endl;
+		}
+
+		m_threadCondVariable.wait(guard);
+
+		return;
 	}
 
-	m_threadCondVariable.wait(guard);
+	m_runCore.value()();
 }

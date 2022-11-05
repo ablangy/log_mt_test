@@ -3,9 +3,11 @@
 #include <cstdlib>
 #include <iostream>
 
+#include <memory>
 #include <signal.h>
 #include <string.h>
 
+#include "TappThread.h"
 #include "g3log/loglevels.hpp"
 #include "g3log/logmessage.hpp"
 #include "g3sinks/LogRotate.h"
@@ -88,6 +90,37 @@ int main(int argc, char** argv)
 	});
 
 	LOG(INFO) << "Hello from test app !";
+
+	auto threadCount = tapp::Arguments::instance().getThreadCount().value();
+	std::vector<std::unique_ptr<tapp::TappThread>> thrVect;
+	cpu_set_t cpu;
+
+	CPU_ZERO(&cpu);
+	CPU_SET(1, &cpu);
+	CPU_SET(2, &cpu);
+	CPU_SET(3, &cpu);
+	CPU_SET(4, &cpu);
+	CPU_SET(5, &cpu);
+	CPU_SET(6, &cpu);
+
+	auto barrier = std::make_shared<pthread_barrier_t>();
+	pthread_barrier_init(barrier.get(), NULL, threadCount + 1);
+
+	if (tapp::Arguments::instance().getThreadCount()) {
+
+		for (uint32_t thrIdx = 0; thrIdx < threadCount; ++thrIdx) {
+			thrVect.emplace_back(std::make_unique<tapp::TappThread>(SCHED_OTHER, 0, cpu, barrier, std::nullopt));
+			thrVect.back()->start();
+		}
+
+		if (int bwRes = pthread_barrier_wait(barrier.get()); bwRes != 0 && bwRes != PTHREAD_BARRIER_SERIAL_THREAD) {
+			std::cerr << "pthread_barrier_wait() has failed: " << strerror(bwRes);
+		}
+
+	}
+
+	auto abortThread = std::make_unique<tapp::TappThread>(SCHED_OTHER, 0, cpu, barrier, []() { abort(); });
+	abortThread->start();
 
 	auto signum = sigwaitinfo(&g_termSigSet, nullptr);
 	if (signum < 0) {

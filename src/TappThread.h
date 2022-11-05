@@ -6,12 +6,14 @@
 #include <thread>
 #include <mutex>
 #include <condition_variable>
+#include <functional>
+#include <optional>
 
 namespace tapp {
 
 class TappThread {
 public:
-	TappThread(int schedPolicy, int schedPriority, cpu_set_t cpuAffinity, const std::shared_ptr<pthread_barrier_t>& barrier);
+	TappThread(int schedPolicy, int schedPriority, cpu_set_t cpuAffinity, const std::shared_ptr<pthread_barrier_t>& barrier, std::optional<std::function<void()>> runCore);
 
 	void run();
 
@@ -29,6 +31,7 @@ private:
 	int m_threadPriority;
 	cpu_set_t m_threadCpuAffinity;
 	std::shared_ptr<pthread_barrier_t> m_barrier;
+	std::optional<std::function<void()>> m_runCore;
 };
 
 }
