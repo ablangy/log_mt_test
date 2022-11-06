@@ -91,7 +91,6 @@ int main(int argc, char** argv)
 
 	LOG(INFO) << "Hello from test app !";
 
-	auto threadCount = tapp::Arguments::instance().getThreadCount().value();
 	std::vector<std::unique_ptr<tapp::TappThread>> thrVect;
 	cpu_set_t cpu;
 
@@ -103,10 +102,11 @@ int main(int argc, char** argv)
 	CPU_SET(5, &cpu);
 	CPU_SET(6, &cpu);
 
-	auto barrier = std::make_shared<pthread_barrier_t>();
-	pthread_barrier_init(barrier.get(), NULL, threadCount + 1);
-
 	if (tapp::Arguments::instance().getThreadCount()) {
+		auto threadCount = tapp::Arguments::instance().getThreadCount().value();
+
+		auto barrier = std::make_shared<pthread_barrier_t>();
+		pthread_barrier_init(barrier.get(), NULL, threadCount + 1);
 
 		for (uint32_t thrIdx = 0; thrIdx < threadCount; ++thrIdx) {
 			thrVect.emplace_back(std::make_unique<tapp::TappThread>(SCHED_OTHER, 0, cpu, barrier, std::nullopt));
@@ -116,10 +116,9 @@ int main(int argc, char** argv)
 		if (int bwRes = pthread_barrier_wait(barrier.get()); bwRes != 0 && bwRes != PTHREAD_BARRIER_SERIAL_THREAD) {
 			std::cerr << "pthread_barrier_wait() has failed: " << strerror(bwRes);
 		}
-
 	}
 
-	auto abortThread = std::make_unique<tapp::TappThread>(SCHED_OTHER, 0, cpu, barrier, []() { abort(); });
+	auto abortThread = std::make_unique<tapp::TappThread>(SCHED_OTHER, 0, cpu, nullptr, []() { abort(); });
 	abortThread->start();
 
 	auto signum = sigwaitinfo(&g_termSigSet, nullptr);

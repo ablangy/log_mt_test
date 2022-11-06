@@ -66,8 +66,10 @@ void tapp::TappThread::run()
 	if (not m_runCore) {
 		std::unique_lock guard { m_threadLock };
 
-		if (int bwRes = pthread_barrier_wait(m_barrier.get()); bwRes != 0 && bwRes != PTHREAD_BARRIER_SERIAL_THREAD) {
-			std::cerr << "CommandFairDispatcher n'a pas pu faire pthread_barrier_wait, code erreur : " << bwRes << std::endl;
+		if (m_barrier) {
+			if (int bwRes = pthread_barrier_wait(m_barrier.get()); bwRes != 0 && bwRes != PTHREAD_BARRIER_SERIAL_THREAD) {
+				std::cerr << "CommandFairDispatcher n'a pas pu faire pthread_barrier_wait, code erreur : " << bwRes << std::endl;
+			}
 		}
 
 		m_threadCondVariable.wait(guard);
