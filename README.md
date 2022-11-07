@@ -125,7 +125,7 @@ gdb$ bt
 #19 0x00007f4c1bd12370 in clone3 () from /lib64/libc.so.6
 ```
 
-or indirectly
+or indirectly (from another execution)
 ```
 gdb$ info threads
   Id   Target Id                         Frame
@@ -206,7 +206,7 @@ exitWithDefaultSignalHandler:230. Exiting due to FATAL_SIGNAL, 6
 Abandon (core dumped)
 ```
 
-Open the core, you should see the 3 threads decribed earlier:  
+Open the core, you should see the 3 threads as described earlier:  
 ```
 gdb$ info threads
   Id   Target Id                         Frame 
@@ -253,3 +253,6 @@ gdb$ bt
 #16 0x00007f9faec8cded in start_thread () from /lib64/libc.so.6
 #17 0x00007f9faed12370 in clone3 () from /lib64/libc.so.6
 ```
+
+The global variables are left intact, the core file is not corrupted.  
+
